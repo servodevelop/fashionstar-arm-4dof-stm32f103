@@ -284,7 +284,7 @@ FSARM_Init(servoUsart); 	// 机械臂初始化-> 回归到机械零点
  * FashionStar四自由度机械臂-初始化测试
  * --------------------------
  * 作者: 阿凯|Kyle
- * 邮箱: xingshunkai@qq.com
+ * 邮箱: kyle.xing@fashionstar.com.hk
  * 更新时间: 2020/05/19
  */
  
@@ -430,7 +430,7 @@ printf("[INFO] Joint Angles: [%.1f, %.1f, %.1f, %.1f] \r\n", jointAngles.theta1,
  * FashionStar四自由度机械臂-阻尼模式下角度回读
  * --------------------------
  * 作者: 阿凯|Kyle
- * 邮箱: xingshunkai@qq.com
+ * 邮箱: kyle.xing@fashionstar.com.hk
  * 更新时间: 2020/05/19
  */
  
@@ -743,7 +743,7 @@ FSARM_SetJointAngleParallel(jointAngles);
  * FashionStar四自由度机械臂-设置关节角度
  * --------------------------
  * 作者: 阿凯|Kyle
- * 邮箱: xingshunkai@qq.com
+ * 邮箱: kyle.xing@fashionstar.com.hk
  * 更新时间: 2020/05/19
  */
  
@@ -888,7 +888,7 @@ printf("Forward Kinematics, ToolPosi = (%.1f, %.1f, %.1f)", toolPosi.x, toolPosi
  * FashionStar四自由度机械臂-机械臂正向运动学测试
  * --------------------------
  * 作者: 阿凯|Kyle
- * 邮箱: xingshunkai@qq.com
+ * 邮箱: kyle.xing@fashionstar.com.hk
  * 更新时间: 2020/05/19
  */
  
@@ -1030,7 +1030,7 @@ FSARM_STATUS code = FSARM_InverseKinematics(toolPosi, &jointAngles);
  * FashionStar四自由度机械臂-机械臂逆向运动学测试
  * --------------------------
  * 作者: 阿凯|Kyle
- * 邮箱: xingshunkai@qq.com
+ * 邮箱: kyle.xing@fashionstar.com.hk
  * 更新时间: 2020/05/19
  */
  
@@ -1167,7 +1167,7 @@ FSARM_MoveP2P(8.0, 8, -4.0);
  * FashionStar四自由度机械臂-点控MoveP2P(自由轨迹)
  * --------------------------
  * 作者: 阿凯|Kyle
- * 邮箱: xingshunkai@qq.com
+ * 邮箱: kyle.xing@fashionstar.com.hk
  * 更新时间: 2020/05/19
  */
  
@@ -1255,7 +1255,7 @@ FSARM_MoveLine(9.0, 9.0, 0.0);
  * FashionStar四自由度机械臂-直线插补MoveLine
  * --------------------------
  * 作者: 阿凯|Kyle
- * 邮箱: xingshunkai@qq.com
+ * 邮箱: kyle.xing@fashionstar.com.hk
  * 更新时间: 2020/05/19
  */
 #include "stm32f10x.h"
@@ -1363,7 +1363,7 @@ FSARM_PumpOff();			// 气泵关闭
  * FashionStar四自由度机械臂-气泵控制
  * --------------------------
  * 作者: 阿凯|Kyle
- * 邮箱: xingshunkai@qq.com
+ * 邮箱: kyle.xing@fashionstar.com.hk
  * 更新时间: 2020/05/19
  */
  
@@ -1449,7 +1449,7 @@ FSARM_Grab(22, 1, -3, 9, 11, -3);
  * FashionStar四自由度机械臂-物块抓取
  * --------------------------
  * 作者: 阿凯|Kyle
- * 邮箱: xingshunkai@qq.com
+ * 邮箱: kyle.xing@fashionstar.com.hk
  * 更新时间: 2020/05/19
  */
  

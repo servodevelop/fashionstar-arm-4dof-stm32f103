@@ -1,9 +1,9 @@
 /*
- * FashionStarËÄ×ÔÓÉ¶È»úÐµ±Û STM32 SDK
+ * FashionStarï¿½ï¿½ï¿½ï¿½ï¿½É¶È»ï¿½Ðµï¿½ï¿½ STM32 SDK
  * --------------------------
- * ×÷Õß: °¢¿­|Kyle
- * ÓÊÏä: xingshunkai@qq.com
- * ¸üÐÂÊ±¼ä: 2020/05/19
+ * ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½|Kyle
+ * ï¿½ï¿½kyle.xing@fashionstar.com.hk.com
+ * ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½: 2020/05/19
  */
 #ifndef __ARM4DOF_H
 #define __ARM4DOF_H
@@ -16,39 +16,39 @@
 #include "fashion_star_uart_servo.h"
 #include "sys_tick.h"
 
-// ×´Ì¬Âë
+// ×´Ì¬ï¿½ï¿½
 #define FSARM_STATUS uint8_t
-#define FSARM_STATUS_SUCCESS 0 // ³É¹¦
-#define FSARM_STATUS_FAIL 1 // Ê§°Ü
-#define FSARM_STATUS_JOINT1_OUTRANGE 2 // ¹Ø½Ú1³¬³ö·¶Î§
-#define FSARM_STATUS_JOINT2_OUTRANGE 3 // ¹Ø½Ú2³¬³ö·¶Î§
-#define FSARM_STATUS_JOINT3_OUTRANGE 4 // ¹Ø½Ú3³¬³ö·¶Î§
-#define FSARM_STATUS_JOINT4_OUTRANGE 5 // ¹Ø½Ú4³¬³ö·¶Î§
-#define FSARM_STATUS_TOOLPOSI_TOO_FAR 6 // ¹¤¾ß×ø±êÄ¿±êµã¾àÀë»úÐµ±ÛÌ«Ò£Ô¶
+#define FSARM_STATUS_SUCCESS 0 // ï¿½É¹ï¿½
+#define FSARM_STATUS_FAIL 1 // Ê§ï¿½ï¿½
+#define FSARM_STATUS_JOINT1_OUTRANGE 2 // ï¿½Ø½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§
+#define FSARM_STATUS_JOINT2_OUTRANGE 3 // ï¿½Ø½ï¿½2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§
+#define FSARM_STATUS_JOINT3_OUTRANGE 4 // ï¿½Ø½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§
+#define FSARM_STATUS_JOINT4_OUTRANGE 5 // ï¿½Ø½ï¿½4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§
+#define FSARM_STATUS_TOOLPOSI_TOO_FAR 6 // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½Ì«Ò£Ô¶
 
-// »úÐµ±Û³£Á¿
-#define FSARM_SERVO_NUM 4 // »úÐµ±Û¶æ»úµÄ¸öÊý
-#define FSARM_JOINT1 0 // ¹Ø½Ú1¶ÔÓ¦µÄ¶æ»úID
-#define FSARM_JOINT2 1 // ¹Ø½Ú2¶ÔÓ¦µÄ¶æ»úID
-#define FSARM_JOINT3 2 // ¹Ø½Ú3¶ÔÓ¦µÄ¶æ»úID
-#define FSARM_JOINT4 3 // ¹Ø½Ú4¶ÔÓ¦µÄ¶æ»úID
-#define FSARM_LINK1 0    // Á¬¸Ë1µÄ³¤¶È µ¥Î»cm
-#define FSARM_LINK2 8    // Á¬¸Ë2µÄ³¤¶È µ¥Î»cm
-#define FSARM_LINK3 7.6  // Á¬¸Ë3µÄ³¤¶È µ¥Î»cm
-#define FSARM_LINK4 6.5  // Á¬¸Ë4µÄ³¤¶È µ¥Î»cm
-#define FSARM_TOOL_LENGTH 4.0 // ¹¤¾ßµÄ³¤¶È
+// ï¿½ï¿½Ðµï¿½Û³ï¿½ï¿½ï¿½
+#define FSARM_SERVO_NUM 4 // ï¿½ï¿½Ðµï¿½Û¶ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½
+#define FSARM_JOINT1 0 // ï¿½Ø½ï¿½1ï¿½ï¿½Ó¦ï¿½Ä¶ï¿½ï¿½ID
+#define FSARM_JOINT2 1 // ï¿½Ø½ï¿½2ï¿½ï¿½Ó¦ï¿½Ä¶ï¿½ï¿½ID
+#define FSARM_JOINT3 2 // ï¿½Ø½ï¿½3ï¿½ï¿½Ó¦ï¿½Ä¶ï¿½ï¿½ID
+#define FSARM_JOINT4 3 // ï¿½Ø½ï¿½4ï¿½ï¿½Ó¦ï¿½Ä¶ï¿½ï¿½ID
+#define FSARM_LINK1 0    // ï¿½ï¿½ï¿½ï¿½1ï¿½Ä³ï¿½ï¿½ï¿½ ï¿½ï¿½Î»cm
+#define FSARM_LINK2 8    // ï¿½ï¿½ï¿½ï¿½2ï¿½Ä³ï¿½ï¿½ï¿½ ï¿½ï¿½Î»cm
+#define FSARM_LINK3 7.6  // ï¿½ï¿½ï¿½ï¿½3ï¿½Ä³ï¿½ï¿½ï¿½ ï¿½ï¿½Î»cm
+#define FSARM_LINK4 6.5  // ï¿½ï¿½ï¿½ï¿½4ï¿½Ä³ï¿½ï¿½ï¿½ ï¿½ï¿½Î»cm
+#define FSARM_TOOL_LENGTH 4.0 // ï¿½ï¿½ï¿½ßµÄ³ï¿½ï¿½ï¿½
 
-// ¶æ»ú±ê¶¨²ÎÊý
-#define FSARM_JOINT1_P90 -92.6  //¹Ø½Ú1Îª90¡ãÊ±µÄ¶æ»úÔ­Ê¼½Ç¶È
-#define FSARM_JOINT1_N90 91.4   //¹Ø½Ú1Îª-90¡ãÊ±µÄ¶æ»úÔ­Ê¼½Ç¶È
-#define FSARM_JOINT2_P0 89.3    //¹Ø½Ú2Îª0¡ãÊ±µÄ¶æ»úÔ­Ê¼½Ç¶È
-#define FSARM_JOINT2_N90 -0.2   //¹Ø½Ú2Îª-90¡ãÊ±µÄ¶æ»úÔ­Ê¼½Ç¶È
-#define FSARM_JOINT3_P90 -48.4  //¹Ø½Ú3Îª90¡ãÊ±µÄ¶æ»úÔ­Ê¼½Ç¶È
-#define FSARM_JOINT3_N90 134.8  //¹Ø½Ú3Îª-90¡ãÊ±µÄ¶æ»úÔ­Ê¼½Ç¶È
-#define FSARM_JOINT4_P90 -90.5  //¹Ø½Ú4Îª90¡ãÊ±µÄ¶æ»úÔ­Ê¼½Ç¶È
-#define FSARM_JOINT4_N90 91.4   //¹Ø½Ú4Îª-90¡ãÊ±µÄ¶æ»úÔ­Ê¼½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½ê¶¨ï¿½ï¿½ï¿½ï¿½
+#define FSARM_JOINT1_P90 -92.6  //ï¿½Ø½ï¿½1Îª90ï¿½ï¿½Ê±ï¿½Ä¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
+#define FSARM_JOINT1_N90 91.4   //ï¿½Ø½ï¿½1Îª-90ï¿½ï¿½Ê±ï¿½Ä¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
+#define FSARM_JOINT2_P0 89.3    //ï¿½Ø½ï¿½2Îª0ï¿½ï¿½Ê±ï¿½Ä¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
+#define FSARM_JOINT2_N90 -0.2   //ï¿½Ø½ï¿½2Îª-90ï¿½ï¿½Ê±ï¿½Ä¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
+#define FSARM_JOINT3_P90 -48.4  //ï¿½Ø½ï¿½3Îª90ï¿½ï¿½Ê±ï¿½Ä¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
+#define FSARM_JOINT3_N90 134.8  //ï¿½Ø½ï¿½3Îª-90ï¿½ï¿½Ê±ï¿½Ä¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
+#define FSARM_JOINT4_P90 -90.5  //ï¿½Ø½ï¿½4Îª90ï¿½ï¿½Ê±ï¿½Ä¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
+#define FSARM_JOINT4_N90 91.4   //ï¿½Ø½ï¿½4Îª-90ï¿½ï¿½Ê±ï¿½Ä¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
 
-// ÉèÖÃ¹Ø½Ú½Ç¶ÈµÄÔ¼Êø
+// ï¿½ï¿½ï¿½Ã¹Ø½Ú½Ç¶Èµï¿½Ô¼ï¿½ï¿½
 #define FSARM_JOINT1_MIN -135.0
 #define FSARM_JOINT1_MAX 135.0
 #define FSARM_JOINT2_MIN -135.0
@@ -58,27 +58,27 @@
 #define FSARM_JOINT4_MIN -135.0
 #define FSARM_JOINT4_MAX 135.0
 
-// HOME »úÐµ±Û»úÐµÁãµãµÄ¶¨Òå
+// HOME ï¿½ï¿½Ðµï¿½Û»ï¿½Ðµï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½
 #define FSARM_HOME_X 12
 #define FSARM_HOME_Y 0
 #define FSARM_HOME_Z 10
 
-// Æø±ÃµÄÅäÖÃ
+// ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½
 #define PUMP_SERVO_ID 0xFE
 
-// ´®¿Ú¶æ»úµÄ½Ç¶È¿ØÖÆËÀÇø(ÎÈÌ¬Îó²î)
+// ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½Ä½Ç¶È¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½)
 #define FSUS_ANGLE_DEAD_BLOCK 0.2
-// ÔÚ¶àÉÙmsÄÚ£¬½Ç¶ÈÎó²îÃ»ÓÐ·¢Éú±ä»¯
+// ï¿½Ú¶ï¿½ï¿½ï¿½msï¿½Ú£ï¿½ï¿½Ç¶ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ä»¯
 #define FSUS_WAIT_TIMEOUT_MS 1000 
 
-// µÑ¿¨¶û¿Õ¼äÏÂµÄµã
+// ï¿½Ñ¿ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½ÂµÄµï¿½
 typedef struct{
     float x;
     float y;
     float z;
 }FSARM_POINT3D_T;
 
-// ¹Ø½Ú×´Ì¬
+// ï¿½Ø½ï¿½×´Ì¬
 typedef struct{
     float theta1;
     float theta2;
@@ -86,114 +86,114 @@ typedef struct{
     float theta4;
 }FSARM_JOINTS_STATE_T;
 
-extern Usart_DataTypeDef *armUsart; // »úÐµ±ÛµÄUsart½á¹¹Ìå
+extern Usart_DataTypeDef *armUsart; // ï¿½ï¿½Ðµï¿½Ûµï¿½Usartï¿½á¹¹ï¿½ï¿½
 
-extern float kJoint2Servo[FSARM_SERVO_NUM]; 		// »úÐµ±Û¹Ø½Ú½Ç¶Èµ½¶æ»úÔ­Ê¼½Ç¶ÈµÄ±ÈÀýÏµÊý
-extern float bJoint2Servo[FSARM_SERVO_NUM]; 		// »úÐµ±Û¹Ø½Ú½Ç¶Èµ½¶æ»úÔ­Ê¼½Ç¶ÈµÄÆ«ÒÆÁ¿
-extern float jointAngleLowerb[FSARM_SERVO_NUM]; 	// ¹Ø½Ú½Ç¶ÈÏÂÏÞ
-extern float jointAngleUpperb[FSARM_SERVO_NUM]; 	// ¹Ø½Ú½Ç¶ÈÉÏÏÞ
-extern float curServoAngles[FSARM_SERVO_NUM]; 		// µ±Ç°µÄ¶æ»úµÄ½Ç¶È
-extern  float nextServoAngles[FSARM_SERVO_NUM];		// Ä¿±ê¶æ»ú½Ç¶È
-extern float armJointSpeed; 							// ¹Ø½ÚµÄÐý×ªËÙ¶È µ¥Î»dps
+extern float kJoint2Servo[FSARM_SERVO_NUM]; 		// ï¿½ï¿½Ðµï¿½Û¹Ø½Ú½Ç¶Èµï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ÈµÄ±ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+extern float bJoint2Servo[FSARM_SERVO_NUM]; 		// ï¿½ï¿½Ðµï¿½Û¹Ø½Ú½Ç¶Èµï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½Ç¶Èµï¿½Æ«ï¿½ï¿½ï¿½ï¿½
+extern float jointAngleLowerb[FSARM_SERVO_NUM]; 	// ï¿½Ø½Ú½Ç¶ï¿½ï¿½ï¿½ï¿½ï¿½
+extern float jointAngleUpperb[FSARM_SERVO_NUM]; 	// ï¿½Ø½Ú½Ç¶ï¿½ï¿½ï¿½ï¿½ï¿½
+extern float curServoAngles[FSARM_SERVO_NUM]; 		// ï¿½ï¿½Ç°ï¿½Ä¶ï¿½ï¿½ï¿½Ä½Ç¶ï¿½
+extern  float nextServoAngles[FSARM_SERVO_NUM];		// Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½
+extern float armJointSpeed; 							// ï¿½Ø½Úµï¿½ï¿½ï¿½×ªï¿½Ù¶ï¿½ ï¿½ï¿½Î»dps
 
-// ³õÊ¼»¯»úÐµ±Û
+// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½
 void FSARM_Init(Usart_DataTypeDef *usart);
 
-// »úÐµ±Û¹Ø½Ú±ê¶¨
+// ï¿½ï¿½Ðµï¿½Û¹Ø½Ú±ê¶¨
 void FSARM_Calibration(void);
 
-// ÉèÖÃ»úÐµ±ÛµÄ¹Ø½Ú·¶Î§
+// ï¿½ï¿½ï¿½Ã»ï¿½Ðµï¿½ÛµÄ¹Ø½Ú·ï¿½Î§
 void FSARM_SetAngleRange(void);
 
-// ÉèÖÃÊÇ·ñ¿ªÆôÅ¤¾Ø
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Å¤ï¿½ï¿½
 void FSARM_SetTorque(bool enable);
 
-// ÉèÖÃ¹Ø½ÚÎª×èÄáÄ£Ê½
+// ï¿½ï¿½ï¿½Ã¹Ø½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ä£Ê½
 void FSARM_SetDamping(uint16_t power);
 
-// µ¥¸ö¹Ø½Ú½Ç¶ÈÊÇ·ñ³¬³ö·¶Î§
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ø½Ú½Ç¶ï¿½ï¿½Ç·ñ³¬³ï¿½ï¿½ï¿½Î§
 bool FSARM_IsJointLegal(uint8_t jntIdx, float angle);
 
-// ÉèÖÃ¹Ø½Ú×ªËÙ(¹À¼Æ)
+// ï¿½ï¿½ï¿½Ã¹Ø½ï¿½×ªï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
 void FSARM_SetSpeed(float speed);
 
-// ¹Ø½Ú½Ç¶È×ª»»Îª¶æ»ú½Ç¶È 
+// ï¿½Ø½Ú½Ç¶ï¿½×ªï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ç¶ï¿½ 
 void FSARM_JointAngle2ServoAngle(FSARM_JOINTS_STATE_T jointAngles, FSARM_JOINTS_STATE_T* servoAngles);
 
-// ¶æ»ú½Ç¶È×ª»»Îª¹Ø½Ú½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½×ªï¿½ï¿½Îªï¿½Ø½Ú½Ç¶ï¿½
 void FSARM_ServoAngle2JointAngle(FSARM_JOINTS_STATE_T servoAngles,FSARM_JOINTS_STATE_T* jointAngles);
 
-// ÉèÖÃ¶æ»úµÄµ±Ç°½Ç¶È
+// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½Äµï¿½Ç°ï¿½Ç¶ï¿½
 void FSARM_SetCurServoAngle(FSARM_JOINTS_STATE_T servoAngles);
 
-// ÉèÖÃÄ¿±ê¶æ»ú½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½
 void FSARM_SetNextServoAngle(FSARM_JOINTS_STATE_T servoAngles);
 
-// ÅúÁ¿¶ÁÈ¡¶æ»úÔ­Ê¼½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
 void FSARM_QueryServoAngle(FSARM_JOINTS_STATE_T* servoAngles);
 
-// ÅúÁ¿ÉèÖÃ¶æ»úÔ­Ê¼½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
 void FSARM_SetServoAngle(FSARM_JOINTS_STATE_T servoAngles);
 
-// ÅúÁ¿ÉèÖÃ¶æ»úÔ­Ê¼½Ç¶È(´øÍ³Ò»µÄÖÜÆÚ)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½(ï¿½ï¿½Í³Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 void FSARM_SetServoAngle2(FSARM_JOINTS_STATE_T servoAngles, uint16_t interval);
 
-// ÅúÁ¿¶ÁÈ¡¹Ø½ÚµÄ½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ø½ÚµÄ½Ç¶ï¿½
 void FSARM_QueryJointAngle(FSARM_JOINTS_STATE_T* jointAngles);
 
-// ÅúÁ¿ÉèÖÃ¹Ø½ÚµÄ½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¹Ø½ÚµÄ½Ç¶ï¿½
 void FSARM_SetJointAngle(FSARM_JOINTS_STATE_T jointAngles);
 
-// ÅúÁ¿ÉèÖÃ¹Ø½ÚµÄ½Ç¶È(´øÍ³Ò»µÄÖÜÆÚ)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¹Ø½ÚµÄ½Ç¶ï¿½(ï¿½ï¿½Í³Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 void FSARM_SetJointAngle2(FSARM_JOINTS_STATE_T jointAngles, uint16_t interval);
 
-// ÅúÁ¿ÉèÖÃ¹Ø½ÚµÄ½Ç¶È(Ä©¶ËÆ½ÐÐ)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¹Ø½ÚµÄ½Ç¶ï¿½(Ä©ï¿½ï¿½Æ½ï¿½ï¿½)
 void FSARM_SetJointAngleParallel(FSARM_JOINTS_STATE_T jointAngles);
 
-// »úÐµ±ÛµÄÕýÏòÔË¶¯Ñ§
+// ï¿½ï¿½Ðµï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½Ñ§
 void FSARM_ForwardKinmatics(FSARM_JOINTS_STATE_T jointAngles, FSARM_POINT3D_T* toolPosi);
 
-// »úÐµ±ÛÄæÏòÔË¶¯Ñ§
+// ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½Ñ§
 FSARM_STATUS  FSARM_InverseKinematics(FSARM_POINT3D_T toolPosi, FSARM_JOINTS_STATE_T* thetas);
 
-// Íó¹Ø½ÚµÄ×ø±ê×ª»»Îª¹¤¾ß×ø±ê
+// ï¿½ï¿½Ø½Úµï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void FSARM_TransWrist2Tool(FSARM_POINT3D_T endPosi, FSARM_POINT3D_T* toolPosi);
 
-// Ä©¶ËµÄ×ø±ê×ª»»ÎªÍó¹Ø½Ú
+// Ä©ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½Ø½ï¿½
 void FSARM_TransTool2Wrist(FSARM_POINT3D_T toolPosi, FSARM_POINT3D_T* endPosi);
 
-// µã¿Ø(×ÔÓÉ¹ì¼£)
+// ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½É¹ì¼£)
 FSARM_STATUS FSARM_MoveP2P(float x, float y, float z);
 
-// Ö±Ïß²å²¹
+// Ö±ï¿½ß²å²¹
 FSARM_STATUS FSARM_MoveLine(float x, float y, float z);
 
-// ¹é»Øµ½»úÐµÁãµã
+// ï¿½ï¿½Øµï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½
 void FSARM_Home(void);
 
-// ²éÑ¯»úÐµ±ÛÊÇ·ñ¿ÕÏÐ
+// ï¿½ï¿½Ñ¯ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
 void FSARM_IsIdle(void);
 
 
-// µÈ´ýµ±¸ö¹Ø½ÚÐý×ªµ½Ä¿±ê½Ç¶È
+// ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ä¿ï¿½ï¿½Ç¶ï¿½
 void FSARM_Wait(uint8_t jntIdx);
 
-// µÈ´ýËùÓÐµÄ¹Ø½ÚÐý×ªµ½Ä¿±ê½Ç¶È
+// ï¿½È´ï¿½ï¿½ï¿½ï¿½ÐµÄ¹Ø½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ä¿ï¿½ï¿½Ç¶ï¿½
 void FSARM_WaitAll(void);
 
-// ¼ÆËãÄ©¶Ë¹¤¾ßµÄ×ø±ê 
+// ï¿½ï¿½ï¿½ï¿½Ä©ï¿½Ë¹ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½ 
 void FSARM_GetToolPosi(FSARM_POINT3D_T *toolPosi);
 
-// ¸üÐÂ»úÐµ±ÛµÄ×´Ì¬ 
+// ï¿½ï¿½ï¿½Â»ï¿½Ðµï¿½Ûµï¿½×´Ì¬ 
 void FSARM_Update(void);
 
-// Æø±Ã¿ªÆô
+// ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½
 void FSARM_PumpOn(void);
 
-// Æø±Ã¹Ø±Õ
+// ï¿½ï¿½ï¿½Ã¹Ø±ï¿½
 void FSARM_PumpOff(void);
 
-// Îï¿é×¥È¡
+// ï¿½ï¿½ï¿½×¥È¡
 void FSARM_Grab(float x1, float y1, float z1, float x2, float y2, float z2);
 
 #endif

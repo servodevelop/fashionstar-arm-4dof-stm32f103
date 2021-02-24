@@ -1,48 +1,48 @@
 /*
- * FashionStarËÄ×ÔÓÉ¶È»úÐµ±Û STM32 SDK
+ * FashionStarï¿½ï¿½ï¿½ï¿½ï¿½É¶È»ï¿½Ðµï¿½ï¿½ STM32 SDK
  * --------------------------
- * ×÷Õß: °¢¿­|Kyle
- * ÓÊÏä: xingshunkai@qq.com
- * ¸üÐÂÊ±¼ä: 2020/05/19
+ * ï¿½ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½ï¿½|Kyle
+ * ï¿½ï¿½kyle.xing@fashionstar.com.hk.com
+ * ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½: 2020/05/19
  */
 #include "arm4dof.h"
 
-Usart_DataTypeDef *armUsart; // »úÐµ±ÛµÄUsart½á¹¹Ìå
-float kJoint2Servo[FSARM_SERVO_NUM]; 		// »úÐµ±Û¹Ø½Ú½Ç¶Èµ½¶æ»úÔ­Ê¼½Ç¶ÈµÄ±ÈÀýÏµÊý
-float bJoint2Servo[FSARM_SERVO_NUM]; 		// »úÐµ±Û¹Ø½Ú½Ç¶Èµ½¶æ»úÔ­Ê¼½Ç¶ÈµÄÆ«ÒÆÁ¿
-float jointAngleLowerb[FSARM_SERVO_NUM]; 	// ¹Ø½Ú½Ç¶ÈÏÂÏÞ
-float jointAngleUpperb[FSARM_SERVO_NUM]; 	// ¹Ø½Ú½Ç¶ÈÉÏÏÞ
-float curServoAngles[FSARM_SERVO_NUM]; 		// µ±Ç°µÄ¶æ»úµÄ½Ç¶È
-float nextServoAngles[FSARM_SERVO_NUM];		// Ä¿±ê¶æ»ú½Ç¶È
+Usart_DataTypeDef *armUsart; // ï¿½ï¿½Ðµï¿½Ûµï¿½Usartï¿½á¹¹ï¿½ï¿½
+float kJoint2Servo[FSARM_SERVO_NUM]; 		// ï¿½ï¿½Ðµï¿½Û¹Ø½Ú½Ç¶Èµï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ÈµÄ±ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+float bJoint2Servo[FSARM_SERVO_NUM]; 		// ï¿½ï¿½Ðµï¿½Û¹Ø½Ú½Ç¶Èµï¿½ï¿½ï¿½ï¿½Ô­Ê¼ï¿½Ç¶Èµï¿½Æ«ï¿½ï¿½ï¿½ï¿½
+float jointAngleLowerb[FSARM_SERVO_NUM]; 	// ï¿½Ø½Ú½Ç¶ï¿½ï¿½ï¿½ï¿½ï¿½
+float jointAngleUpperb[FSARM_SERVO_NUM]; 	// ï¿½Ø½Ú½Ç¶ï¿½ï¿½ï¿½ï¿½ï¿½
+float curServoAngles[FSARM_SERVO_NUM]; 		// ï¿½ï¿½Ç°ï¿½Ä¶ï¿½ï¿½ï¿½Ä½Ç¶ï¿½
+float nextServoAngles[FSARM_SERVO_NUM];		// Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½
 float armJointSpeed;
 
-// ³õÊ¼»¯»úÐµ±Û
+// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½
 void FSARM_Init(Usart_DataTypeDef *usart){
-	armUsart = usart;		// ³õÊ¼»¯Usart
-	FSARM_Calibration();	// ¼ÓÔØ»úÐµ±Û¹Ø½Ú±ê¶¨µÄÊý¾Ý
-	FSARM_SetAngleRange(); 	// ÉèÖÃ½Ç¶È·¶Î§
-	FSARM_SetSpeed(100.0); 	// ÉèÖÃÄ¬ÈÏ×ªËÙ
-	FSARM_Home(); 			// »Ø¹é»úÐµ±Û»úÐµÁãµã
-	FSARM_WaitAll();		// µÈ´ý¶æ»úÐý×ªµ½Ä¿±ê½Ç¶È
+	armUsart = usart;		// ï¿½ï¿½Ê¼ï¿½ï¿½Usart
+	FSARM_Calibration();	// ï¿½ï¿½ï¿½Ø»ï¿½Ðµï¿½Û¹Ø½Ú±ê¶¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	FSARM_SetAngleRange(); 	// ï¿½ï¿½ï¿½Ã½Ç¶È·ï¿½Î§
+	FSARM_SetSpeed(100.0); 	// ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½×ªï¿½ï¿½
+	FSARM_Home(); 			// ï¿½Ø¹ï¿½ï¿½Ðµï¿½Û»ï¿½Ðµï¿½ï¿½ï¿½
+	FSARM_WaitAll();		// ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ä¿ï¿½ï¿½Ç¶ï¿½
 }
 
-// »úÐµ±Û¹Ø½Ú±ê¶¨
+// ï¿½ï¿½Ðµï¿½Û¹Ø½Ú±ê¶¨
 void FSARM_Calibration(void){
-	// ¹Ø½Ú1
+	// ï¿½Ø½ï¿½1
 	kJoint2Servo[FSARM_JOINT1] = (FSARM_JOINT1_P90 - FSARM_JOINT1_N90) / (90.0 - (-90.0));
 	bJoint2Servo[FSARM_JOINT1] = FSARM_JOINT1_P90 - kJoint2Servo[FSARM_JOINT1]*90.0;
-	// ¹Ø½Ú2
+	// ï¿½Ø½ï¿½2
 	kJoint2Servo[FSARM_JOINT2] = (FSARM_JOINT2_P0 - FSARM_JOINT2_N90) / (0 - (-90.0));
 	bJoint2Servo[FSARM_JOINT2] = FSARM_JOINT2_P0 - kJoint2Servo[FSARM_JOINT2]*0.0;
-	// ¹Ø½Ú3
+	// ï¿½Ø½ï¿½3
 	kJoint2Servo[FSARM_JOINT3] = (FSARM_JOINT3_P90 - FSARM_JOINT3_N90) / (90.0 - (-90.0));
 	bJoint2Servo[FSARM_JOINT3] = FSARM_JOINT3_P90 - kJoint2Servo[FSARM_JOINT3]*90.0;
-	// ¹Ø½Ú4
+	// ï¿½Ø½ï¿½4
 	kJoint2Servo[FSARM_JOINT4] = (FSARM_JOINT4_P90 - FSARM_JOINT4_N90) / (90.0 - (-90.0));
 	bJoint2Servo[FSARM_JOINT4] = FSARM_JOINT4_P90 - kJoint2Servo[FSARM_JOINT4]*90.0;
 }
 
-// ÉèÖÃ»úÐµ±ÛµÄ¹Ø½Ú·¶Î§
+// ï¿½ï¿½ï¿½Ã»ï¿½Ðµï¿½ÛµÄ¹Ø½Ú·ï¿½Î§
 void FSARM_SetAngleRange(void){
 	jointAngleLowerb[FSARM_JOINT1] = FSARM_JOINT1_MIN;
 	jointAngleLowerb[FSARM_JOINT2] = FSARM_JOINT2_MIN;
@@ -54,7 +54,7 @@ void FSARM_SetAngleRange(void){
 	jointAngleUpperb[FSARM_JOINT4] = FSARM_JOINT4_MAX;
 }
 
-// ÉèÖÃÊÇ·ñ¿ªÆôÅ¤¾Ø
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Å¤ï¿½ï¿½
 void FSARM_SetTorque(bool enable){
 	if(!enable){
 		FSARM_SetDamping(0);
@@ -65,7 +65,7 @@ void FSARM_SetTorque(bool enable){
 	}
 }
 
-// ÉèÖÃ¹Ø½ÚÎª×èÄáÄ£Ê½
+// ï¿½ï¿½ï¿½Ã¹Ø½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ä£Ê½
 void FSARM_SetDamping(uint16_t power){
 	FSUS_DampingMode(armUsart, FSARM_JOINT1, power);
 	FSUS_DampingMode(armUsart, FSARM_JOINT2, power);
@@ -73,17 +73,17 @@ void FSARM_SetDamping(uint16_t power){
 	FSUS_DampingMode(armUsart, FSARM_JOINT4, power);
 }
 
-// µ¥¸ö¹Ø½Ú½Ç¶ÈÊÇ·ñ³¬³ö·¶Î§
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ø½Ú½Ç¶ï¿½ï¿½Ç·ñ³¬³ï¿½ï¿½ï¿½Î§
 bool FSARM_IsJointLegal(uint8_t jntIdx, float angle){
 	return angle >= jointAngleLowerb[jntIdx] && angle <= jointAngleUpperb[jntIdx];
 }
 
-// ÉèÖÃ¹Ø½Ú×ªËÙ(¹À¼Æ)
+// ï¿½ï¿½ï¿½Ã¹Ø½ï¿½×ªï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)
 void FSARM_SetSpeed(float speed){
 	armJointSpeed = speed;
 }
 
-// ¹Ø½Ú½Ç¶È×ª»»Îª¶æ»ú½Ç¶È
+// ï¿½Ø½Ú½Ç¶ï¿½×ªï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ç¶ï¿½
 void FSARM_JointAngle2ServoAngle(FSARM_JOINTS_STATE_T jointAngles, FSARM_JOINTS_STATE_T* servoAngles){
 	servoAngles->theta1 =  kJoint2Servo[FSARM_JOINT1] * jointAngles.theta1 + bJoint2Servo[FSARM_JOINT1];
 	servoAngles->theta2 =  kJoint2Servo[FSARM_JOINT2] * jointAngles.theta2 + bJoint2Servo[FSARM_JOINT2];
@@ -91,7 +91,7 @@ void FSARM_JointAngle2ServoAngle(FSARM_JOINTS_STATE_T jointAngles, FSARM_JOINTS_
 	servoAngles->theta4 =  kJoint2Servo[FSARM_JOINT4] * jointAngles.theta4 + bJoint2Servo[FSARM_JOINT4];
 }
 
-// ¶æ»ú½Ç¶È×ª»»Îª¹Ø½Ú½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½×ªï¿½ï¿½Îªï¿½Ø½Ú½Ç¶ï¿½
 void FSARM_ServoAngle2JointAngle(FSARM_JOINTS_STATE_T servoAngles,FSARM_JOINTS_STATE_T* jointAngles){
 	jointAngles->theta1 = (servoAngles.theta1 - bJoint2Servo[FSARM_JOINT1]) / kJoint2Servo[FSARM_JOINT1];
 	jointAngles->theta2 = (servoAngles.theta2 - bJoint2Servo[FSARM_JOINT2]) / kJoint2Servo[FSARM_JOINT2];
@@ -99,7 +99,7 @@ void FSARM_ServoAngle2JointAngle(FSARM_JOINTS_STATE_T servoAngles,FSARM_JOINTS_S
 	jointAngles->theta4 = (servoAngles.theta4 - bJoint2Servo[FSARM_JOINT4]) / kJoint2Servo[FSARM_JOINT4];
 }
 
-// ÉèÖÃ¶æ»úµÄµ±Ç°½Ç¶È
+// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½Äµï¿½Ç°ï¿½Ç¶ï¿½
 void FSARM_SetCurServoAngle(FSARM_JOINTS_STATE_T servoAngles){
 	curServoAngles[FSARM_JOINT1] = servoAngles.theta1;
 	curServoAngles[FSARM_JOINT2] = servoAngles.theta2;
@@ -107,7 +107,7 @@ void FSARM_SetCurServoAngle(FSARM_JOINTS_STATE_T servoAngles){
 	curServoAngles[FSARM_JOINT4] = servoAngles.theta4;
 }
 
-// ÉèÖÃ¶æ»úµÄÄ¿±ê½Ç¶È
+// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ç¶ï¿½
 void FSARM_SetNextServoAngle(FSARM_JOINTS_STATE_T servoAngles){
 	nextServoAngles[FSARM_JOINT1] = servoAngles.theta1;
 	nextServoAngles[FSARM_JOINT2] = servoAngles.theta2;
@@ -115,22 +115,22 @@ void FSARM_SetNextServoAngle(FSARM_JOINTS_STATE_T servoAngles){
 	nextServoAngles[FSARM_JOINT4] = servoAngles.theta4;
 }
 
-// ÅúÁ¿¶ÁÈ¡¶æ»úÔ­Ê¼½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
 void FSARM_QueryServoAngle(FSARM_JOINTS_STATE_T* servoAngles){
 	FSUS_QueryServoAngle(armUsart, FSARM_JOINT1, &(servoAngles->theta1));
 	FSUS_QueryServoAngle(armUsart, FSARM_JOINT2, &(servoAngles->theta2));
 	FSUS_QueryServoAngle(armUsart, FSARM_JOINT3, &(servoAngles->theta3));
 	FSUS_QueryServoAngle(armUsart, FSARM_JOINT4, &(servoAngles->theta4));
-	// ¸üÐÂµ±Ç°¶æ»ú½Ç¶È
+	// ï¿½ï¿½ï¿½Âµï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½
 	FSARM_SetCurServoAngle(*servoAngles);
 }
 
-// ÅúÁ¿ÉèÖÃ¶æ»úÔ­Ê¼½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
 void FSARM_SetServoAngle(FSARM_JOINTS_STATE_T servoAngles){
 	FSARM_JOINTS_STATE_T curServoAngles;
 	uint16_t interval;
 	FSARM_QueryServoAngle(&curServoAngles);
-	// ·¢ËÍ¶æ»ú½Ç¶È¿ØÖÆÖ¸Áî
+	// ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½Ç¶È¿ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 	interval = (uint16_t)fabs((servoAngles.theta1 - curServoAngles.theta1)/armJointSpeed*1000);
 	FSUS_SetServoAngle(armUsart, FSARM_JOINT1, servoAngles.theta1, interval, 0, false);	
 	interval = (uint16_t)fabs((servoAngles.theta2 - curServoAngles.theta2)/armJointSpeed*1000);
@@ -139,140 +139,140 @@ void FSARM_SetServoAngle(FSARM_JOINTS_STATE_T servoAngles){
 	FSUS_SetServoAngle(armUsart, FSARM_JOINT3, servoAngles.theta3, interval, 0, false);
 	interval = (uint16_t)fabs((servoAngles.theta4 - curServoAngles.theta4)/armJointSpeed*1000);
 	FSUS_SetServoAngle(armUsart, FSARM_JOINT4, servoAngles.theta4, interval, 0, false);
-	// ÉèÖÃÄ¿±ê½Ç¶È
+	// ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ç¶ï¿½
 	FSARM_SetNextServoAngle(servoAngles);
 }
 
-// ÅúÁ¿ÉèÖÃ¶æ»úÔ­Ê¼½Ç¶È(´øÍ³Ò»µÄÖÜÆÚ)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½(ï¿½ï¿½Í³Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 void FSARM_SetServoAngle2(FSARM_JOINTS_STATE_T servoAngles, uint16_t interval){
 	FSARM_JOINTS_STATE_T curServoAngles;
 	FSARM_QueryServoAngle(&curServoAngles);
-	// ·¢ËÍ¶æ»ú½Ç¶È¿ØÖÆÖ¸
+	// ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½Ç¶È¿ï¿½ï¿½ï¿½Ö¸
 	FSUS_SetServoAngle(armUsart, FSARM_JOINT1, servoAngles.theta1, interval, 0, false);	
 	FSUS_SetServoAngle(armUsart, FSARM_JOINT2, servoAngles.theta2, interval, 0, false);	
 	FSUS_SetServoAngle(armUsart, FSARM_JOINT3, servoAngles.theta3, interval, 0, false);
 	FSUS_SetServoAngle(armUsart, FSARM_JOINT4, servoAngles.theta4, interval, 0, false);
-	// ¸üÐÂ¶æ»úÄ¿±ê½Ç¶ÈÖµ
+	// ï¿½ï¿½ï¿½Â¶ï¿½ï¿½Ä¿ï¿½ï¿½Ç¶ï¿½Öµ
 	FSARM_SetNextServoAngle(servoAngles);
 }
 
-// ÅúÁ¿¶ÁÈ¡¹Ø½ÚµÄ½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ø½ÚµÄ½Ç¶ï¿½
 void FSARM_QueryJointAngle(FSARM_JOINTS_STATE_T* jointAngles){
-	// ²éÑ¯¶æ»úÔ­Ê¼½Ç¶È
+	// ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ô­Ê¼ï¿½Ç¶ï¿½
 	FSARM_JOINTS_STATE_T curServoAngles;
 	FSARM_QueryServoAngle(&curServoAngles);
-	// Ó³ÉäÎª¹Ø½Ú½Ç¶È
+	// Ó³ï¿½ï¿½Îªï¿½Ø½Ú½Ç¶ï¿½
 	FSARM_ServoAngle2JointAngle(curServoAngles, jointAngles);
 }
 
-// ÅúÁ¿ÉèÖÃ¹Ø½ÚµÄ½Ç¶È
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¹Ø½ÚµÄ½Ç¶ï¿½
 void FSARM_SetJointAngle(FSARM_JOINTS_STATE_T jointAngles){
 	FSARM_JOINTS_STATE_T servoAngles;
-	// Ó³ÉäÎª¶æ»ú½Ç¶È
+	// Ó³ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ç¶ï¿½
 	FSARM_JointAngle2ServoAngle(jointAngles, &servoAngles);
-	// ÉèÖÃ¶æ»ú½Ç¶È
+	// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½Ç¶ï¿½
 	FSARM_SetServoAngle(servoAngles);
 }
 
-// ÅúÁ¿ÉèÖÃ¹Ø½ÚµÄ½Ç¶È(´øÍ³Ò»µÄÖÜÆÚ)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¹Ø½ÚµÄ½Ç¶ï¿½(ï¿½ï¿½Í³Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 void FSARM_SetJointAngle2(FSARM_JOINTS_STATE_T jointAngles, uint16_t interval){
 	FSARM_JOINTS_STATE_T servoAngles;
-	// Ó³ÉäÎª¶æ»ú½Ç¶È
+	// Ó³ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ç¶ï¿½
 	FSARM_JointAngle2ServoAngle(jointAngles, &servoAngles);
-	// ÉèÖÃ¶æ»ú½Ç¶È
+	// ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½Ç¶ï¿½
 	FSARM_SetServoAngle2(servoAngles, interval);
 }
 
-// ÅúÁ¿ÉèÖÃ¹Ø½ÚµÄ½Ç¶È(Ä©¶ËÆ½ÐÐ)
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¹Ø½ÚµÄ½Ç¶ï¿½(Ä©ï¿½ï¿½Æ½ï¿½ï¿½)
 void FSARM_SetJointAngleParallel(FSARM_JOINTS_STATE_T jointAngles){
-	// ²éÑ¯»úÐµ±Û¹Ø½ÚµÄ½Ç¶È
+	// ï¿½ï¿½Ñ¯ï¿½ï¿½Ðµï¿½Û¹Ø½ÚµÄ½Ç¶ï¿½
 	FSARM_JOINTS_STATE_T curJointAngles;
 	FSARM_JOINTS_STATE_T nextJointAngles;
 	FSARM_QueryJointAngle(&curJointAngles);
-	// ¼ÆËã½Ç¶È²îÖµ
+	// ï¿½ï¿½ï¿½ï¿½Ç¶È²ï¿½Öµ
 	float dtheta1 = jointAngles.theta1 - curJointAngles.theta1;
 	float dtheta2 = jointAngles.theta2 - curJointAngles.theta2;
 	float dtheta3 = jointAngles.theta3 - curJointAngles.theta3;
 	float dtheta4 = jointAngles.theta4 - curJointAngles.theta4;	
 	float ratio;
 	
-	// ÕÒµ½½Ç¶ÈµÄ×î´ó²îÖµ
+	// ï¿½Òµï¿½ï¿½Ç¶Èµï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	float maxDis = max(max(fabs(dtheta1), fabs(dtheta2)), max(fabs(dtheta3), fabs(dtheta4)));
-	long nStep = (long)(maxDis / 2.0); // 1.0¡ã
+	long nStep = (long)(maxDis / 2.0); // 1.0ï¿½ï¿½
 	TimeTypedef tStart;
 	long tDelay;
 	for(long i=1; i<=nStep; i++){
-		tStart = SysTick_Millis(); // ¿ªÊ¼¼ÆÊ±
-		ratio = (1.0*i)/nStep; // »ñÈ¡½ø¶È
-		ratio = 0.5*(1-sin(radians(90.0 + 180.0*ratio))); // ¶Ôratio½øÐÐÆ½»¬
-		// ¼ÆËã¹Ø½Ú½Ç¶È
+		tStart = SysTick_Millis(); // ï¿½ï¿½Ê¼ï¿½ï¿½Ê±
+		ratio = (1.0*i)/nStep; // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
+		ratio = 0.5*(1-sin(radians(90.0 + 180.0*ratio))); // ï¿½ï¿½ratioï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½
+		// ï¿½ï¿½ï¿½ï¿½Ø½Ú½Ç¶ï¿½
 		nextJointAngles.theta1 = curJointAngles.theta1 + dtheta1*ratio;
 		nextJointAngles.theta2 = curJointAngles.theta2 + dtheta2*ratio;
 		nextJointAngles.theta3 = curJointAngles.theta3 + dtheta3*ratio;
 		nextJointAngles.theta4 = curJointAngles.theta4 + dtheta4*ratio;
-		// ÉèÖÃ¹Ø½Ú½Ç¶È
+		// ï¿½ï¿½ï¿½Ã¹Ø½Ú½Ç¶ï¿½
 		FSARM_SetJointAngle2(nextJointAngles, 0);
-		// µÈ´ý
+		// ï¿½È´ï¿½
 		// TODO 20.0ms
 		tDelay = 10 - (SysTick_Millis() - tStart);
 		if(tDelay > 0){
-			// µÈ´ý20ms
+			// ï¿½È´ï¿½20ms
 			SysTick_DelayMs((TimeTypedef)tDelay);
 		}
 	}
-	// µÈ´ý¶æ»úÐý×ªµ½Ä¿±êÎ»ÖÃ
+	// ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ä¿ï¿½ï¿½Î»ï¿½ï¿½
 	FSARM_WaitAll();
 }
 
-// »úÐµ±ÛµÄÕýÏòÔË¶¯Ñ§
+// ï¿½ï¿½Ðµï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½Ñ§
 void FSARM_ForwardKinmatics(FSARM_JOINTS_STATE_T jointAngles, FSARM_POINT3D_T* toolPosi){
-	FSARM_POINT3D_T wristPosi; //Íó¹Ø½ÚÔ­µãµÄ×ø±ê
-	// ¹Ø½Ú½Ç¶È->»¡¶È
+	FSARM_POINT3D_T wristPosi; //ï¿½ï¿½Ø½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ï¿½Ø½Ú½Ç¶ï¿½->ï¿½ï¿½ï¿½ï¿½
 	float theta1 = radians(jointAngles.theta1);
 	float theta2 = radians(jointAngles.theta2);
 	float theta3 = radians(jointAngles.theta3);
 	float theta4 = radians(jointAngles.theta4);
-	// ¼ÆËãÍó¹Ø½ÚµÄ×ø±ê
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø½Úµï¿½ï¿½ï¿½ï¿½ï¿½
     wristPosi.x = cos(theta1) * (FSARM_LINK2*cos(theta2)+FSARM_LINK3*cos(theta2+theta3));
     wristPosi.y = sin(theta1) * (FSARM_LINK2*cos(theta2)+FSARM_LINK3*cos(theta2+theta3));
     wristPosi.z = -FSARM_LINK2*sin(theta2)-FSARM_LINK3*sin(theta2+theta3);
-	// ¼ÆËãÄ©¶ËµÄ×ø±ê
+	// ï¿½ï¿½ï¿½ï¿½Ä©ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
 	FSARM_TransWrist2Tool(wristPosi, toolPosi);
 }
 
-// »úÐµ±ÛÄæÏòÔË¶¯Ñ§
+// ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½Ñ§
 FSARM_STATUS  FSARM_InverseKinematics(FSARM_POINT3D_T toolPosi, FSARM_JOINTS_STATE_T* jointAngles){
-	// ¹Ø½Ú»¡¶È
+	// ï¿½Ø½Ú»ï¿½ï¿½ï¿½
     float theta1 = 0.0;
     float theta2 = 0.0;
     float theta3 = 0.0;
     float theta4 = 0.0;
 	
-	FSARM_POINT3D_T wristPosi; // Íó¹Ø½Ú×ø±ê
-	FSARM_TransTool2Wrist(toolPosi, &wristPosi); // ¹¤¾ß×ø±ê×ª»»ÎªÍó¹Ø½ÚµÄ×ø±ê
+	FSARM_POINT3D_T wristPosi; // ï¿½ï¿½Ø½ï¿½ï¿½ï¿½ï¿½ï¿½
+	FSARM_TransTool2Wrist(toolPosi, &wristPosi); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½Ø½Úµï¿½ï¿½ï¿½ï¿½ï¿½
 	
-	// ¸ù¾ÝÍó¹Ø½ÚÔ­µã¾àÀë»úÐµ±Û»ù×ø±êÏµµÄÖ±Ïß¾àÀë
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Û»ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½Ö±ï¿½ß¾ï¿½ï¿½ï¿½
     float disO2WristXY = sqrt(pow(wristPosi.x,2) + pow(wristPosi.y, 2) + pow(wristPosi.z, 2));
     if (disO2WristXY > (FSARM_LINK2+FSARM_LINK3)){
         return FSARM_STATUS_TOOLPOSI_TOO_FAR;
     }
 	
-	// ÅÐ¶ÏÍó¹Ø½ÚµÄÔ­µãÊÇ·ñÔÚ»úÐµ±Û×ø±êÏµµÄZÖáÉÏ
+	// ï¿½Ð¶ï¿½ï¿½ï¿½Ø½Úµï¿½Ô­ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ú»ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½
     if (toolPosi.x == 0 && toolPosi.y == 0){
-        // ²éÑ¯¹Ø½Ú1µÄ½Ç¶È, ÈÃtheta1±£³Ö¸úÔ­À´ÏàÍ¬
+        // ï¿½ï¿½Ñ¯ï¿½Ø½ï¿½1ï¿½Ä½Ç¶ï¿½, ï¿½ï¿½theta1ï¿½ï¿½ï¿½Ö¸ï¿½Ô­ï¿½ï¿½ï¿½ï¿½Í¬
 		FSUS_QueryServoAngle(armUsart, FSARM_JOINT1, &(jointAngles->theta1));
 		jointAngles->theta1 = (jointAngles->theta1 - bJoint2Servo[FSARM_JOINT1]) / kJoint2Servo[FSARM_JOINT1];
         theta1 = radians(jointAngles->theta1);
     }else{
-        // Çó½âtheta1
+        // ï¿½ï¿½ï¿½theta1
         theta1 = atan2(toolPosi.y, toolPosi.x);
         jointAngles->theta1 = degrees(theta1);
-        // ÅÐ¶Ïtheta1ÊÇ·ñºÏ·¨
+        // ï¿½Ð¶ï¿½theta1ï¿½Ç·ï¿½Ï·ï¿½
         if (!FSARM_IsJointLegal(FSARM_JOINT1, jointAngles->theta1)){
             return FSARM_STATUS_JOINT1_OUTRANGE;
         }
     }
-	// ¼ÆËãtheta3
+	// ï¿½ï¿½ï¿½ï¿½theta3
     float b;
     if(cos(theta1) !=0){
         b = wristPosi.x / cos(theta1);
@@ -286,7 +286,7 @@ FSARM_STATUS  FSARM_InverseKinematics(FSARM_POINT3D_T toolPosi, FSARM_JOINTS_STA
     if(!FSARM_IsJointLegal(FSARM_JOINT3, jointAngles->theta3)){
         return FSARM_STATUS_JOINT3_OUTRANGE;
     }
-    // ¼ÆËãtheta2
+    // ï¿½ï¿½ï¿½ï¿½theta2
     float k1 = FSARM_LINK2 + FSARM_LINK3*cos(theta3);
     float k2 = FSARM_LINK3 * sin(theta3);
     float r = sqrt(pow(k1, 2) + pow(k2, 2));
@@ -295,17 +295,17 @@ FSARM_STATUS  FSARM_InverseKinematics(FSARM_POINT3D_T toolPosi, FSARM_JOINTS_STA
     if(!FSARM_IsJointLegal(FSARM_JOINT2, jointAngles->theta2)){
         return FSARM_STATUS_JOINT2_OUTRANGE;
     }
-    // ¼ÆËãtheta4
+    // ï¿½ï¿½ï¿½ï¿½theta4
     theta4 = -(theta2 + theta3);
     jointAngles->theta4 = degrees(theta4);
     if(!FSARM_IsJointLegal(FSARM_JOINT4, jointAngles->theta4)){
         return FSARM_STATUS_JOINT4_OUTRANGE;
     }
-    // ³É¹¦Íê³ÉÇó½â
+    // ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     return FSARM_STATUS_SUCCESS;
 }
 
-// Íó¹Ø½ÚµÄ×ø±ê×ª»»Îª¹¤¾ß×ø±ê
+// ï¿½ï¿½Ø½Úµï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void FSARM_TransWrist2Tool(FSARM_POINT3D_T endPosi, FSARM_POINT3D_T* toolPosi){
 	float theta1_rad = atan2(endPosi.y, endPosi.x);
 	toolPosi->x = endPosi.x + FSARM_LINK4*cos(theta1_rad);
@@ -313,7 +313,7 @@ void FSARM_TransWrist2Tool(FSARM_POINT3D_T endPosi, FSARM_POINT3D_T* toolPosi){
 	toolPosi->z = endPosi.z - FSARM_TOOL_LENGTH;
 }
 
-// Ä©¶ËµÄ×ø±ê×ª»»ÎªÍó¹Ø½Ú
+// Ä©ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½Îªï¿½ï¿½Ø½ï¿½
 void FSARM_TransTool2Wrist(FSARM_POINT3D_T toolPosi, FSARM_POINT3D_T* endPosi){
 	float theta1_rad = atan2(toolPosi.y, toolPosi.x); 
     endPosi->x = toolPosi.x - FSARM_LINK4*cos(theta1_rad);
@@ -321,31 +321,31 @@ void FSARM_TransTool2Wrist(FSARM_POINT3D_T toolPosi, FSARM_POINT3D_T* endPosi){
     endPosi->z = toolPosi.z + FSARM_TOOL_LENGTH;
 }
 
-// µã¿Ø(×ÔÓÉ¹ì¼£)
+// ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½É¹ì¼£)
 FSARM_STATUS FSARM_MoveP2P(float x, float y, float z){
 	FSARM_JOINTS_STATE_T jointAngles;
 	FSARM_POINT3D_T toolPosi;
 	toolPosi.x = x;
 	toolPosi.y = y;
 	toolPosi.z = z;
-    FSARM_STATUS status = FSARM_InverseKinematics(toolPosi, &jointAngles); // ÄæÏòÔË¶¯Ñ§
+    FSARM_STATUS status = FSARM_InverseKinematics(toolPosi, &jointAngles); // ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½Ñ§
     if(status == FSARM_STATUS_SUCCESS){
-        // ÉèÖÃ¶æ»úµÄ½Ç¶È
+        // ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½Ä½Ç¶ï¿½
         FSARM_SetJointAngleParallel(jointAngles);
     }
     return status;
 }
 
-// Ö±Ïß²å²¹
+// Ö±ï¿½ß²å²¹
 FSARM_STATUS FSARM_MoveLine(float x, float y, float z){
 	FSARM_POINT3D_T curPosi;
     FSARM_POINT3D_T nextPosi;
 	FSARM_JOINTS_STATE_T jointAngles;
 	
     FSARM_STATUS status;
-    // »ñÈ¡¹¤¾ßµÄÎ»ÖÃ
+    // ï¿½ï¿½È¡ï¿½ï¿½ï¿½ßµï¿½Î»ï¿½ï¿½
     FSARM_GetToolPosi(&curPosi);
-    // ¼ÆËãÆ«ÒÆÁ¿
+    // ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½ï¿½ï¿½
     float dx = x - curPosi.x;
     float dy = y - curPosi.y;
     float dz = z - curPosi.z;
@@ -354,15 +354,15 @@ FSARM_STATUS FSARM_MoveLine(float x, float y, float z){
 
     float ratio;
     long nStep = (long)(distance / 0.4);
-	TimeTypedef tStart; // ¿ªÊ¼¼ÆÊ±µÄÊ±¼ä
+	TimeTypedef tStart; // ï¿½ï¿½Ê¼ï¿½ï¿½Ê±ï¿½ï¿½Ê±ï¿½ï¿½
 	long tDelay;
 	
     for (long i=1; i<=nStep; i++){
         tStart = SysTick_Millis();
-        ratio = (i*1.0 / nStep); // ratioµÄÈ¡Öµ·¶Î§ [0, 1]
-        // Í¨¹ýSÇúÏß¶Ôratio½øÐÐÆ½»¬
+        ratio = (i*1.0 / nStep); // ratioï¿½ï¿½È¡Öµï¿½ï¿½Î§ [0, 1]
+        // Í¨ï¿½ï¿½Sï¿½ï¿½ï¿½ß¶ï¿½ratioï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½
         ratio = 0.5*(1-sin(radians(90+ 180 *ratio)));
-        // ÌîÐ´
+        // ï¿½ï¿½Ð´
         nx = curPosi.x + dx*ratio;
         ny = curPosi.y + dy*ratio;
         nz = curPosi.z + dz*ratio;
@@ -370,64 +370,64 @@ FSARM_STATUS FSARM_MoveLine(float x, float y, float z){
         nextPosi.y = ny;
         nextPosi.z = nz;
 
-        // ÄæÏòÔË¶¯Ñ§Çó½â
-        status = FSARM_InverseKinematics(nextPosi, &jointAngles); // ÄæÏòÔË¶¯Ñ§
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½Ñ§ï¿½ï¿½ï¿½
+        status = FSARM_InverseKinematics(nextPosi, &jointAngles); // ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½Ñ§
         if(status == FSARM_STATUS_SUCCESS){
-			FSARM_SetJointAngle2(jointAngles, 0); // ÉèÖÃÄ¿±ê½Ç¶È
+			FSARM_SetJointAngle2(jointAngles, 0); // ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½Ç¶ï¿½
 			tDelay = 10 - (SysTick_Millis() - tStart);
 			if(tDelay > 0){
-				SysTick_DelayMs((TimeTypedef)tDelay); // µÈ´ý20ms
+				SysTick_DelayMs((TimeTypedef)tDelay); // ï¿½È´ï¿½20ms
 			}
         }
     }
 	
-    // µÈ´ýµ½´ïÄ¿µÄµØ
+    // ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½Äµï¿½
     FSARM_WaitAll();
     return status;
 }
 
-// ¹é»Øµ½»úÐµÁãµã
+// ï¿½ï¿½Øµï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½
 void FSARM_Home(void){
-	// ×ÔÓÉ¹ì¼£ ÔË¶¯µ½»úÐµÁãµã
+	// ï¿½ï¿½ï¿½É¹ì¼£ ï¿½Ë¶ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½
 	FSARM_MoveP2P(FSARM_HOME_X, FSARM_HOME_Y, FSARM_HOME_Z);
 	FSARM_WaitAll();
 }
 
-// ²éÑ¯»úÐµ±ÛÊÇ·ñ¿ÕÏÐ
+// ï¿½ï¿½Ñ¯ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
 void FSARM_IsIdle(void){
 	
 }
 
 
-// ¸üÐÂ»úÐµ±ÛµÄ×´Ì¬ 
+// ï¿½ï¿½ï¿½Â»ï¿½Ðµï¿½Ûµï¿½×´Ì¬ 
 void FSARM_Update(void){
-	// ¸üÐÂ¶æ»úµÄ½Ç¶È
+	// ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ï¿½Ä½Ç¶ï¿½
 	FSARM_JOINTS_STATE_T servoAngles;
 	FSARM_QueryServoAngle(&servoAngles);
 	FSARM_SetCurServoAngle(servoAngles);
 }
 
-// µÈ´ýµ±¸ö¹Ø½ÚÐý×ªµ½Ä¿±ê½Ç¶È
+// ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ä¿ï¿½ï¿½Ç¶ï¿½
 void FSARM_Wait(uint8_t jntIdx){
-	// ½Ç¶ÈÎó²î
+	// ï¿½Ç¶ï¿½ï¿½ï¿½ï¿½
     float dAngle = fabs(curServoAngles[jntIdx] - nextServoAngles[jntIdx]);
 	TimeTypedef tStart;
 	while(true){
-		FSARM_Update(); // ¸üÐÂ»úÐµ±ÛµÄ×´Ì¬
+		FSARM_Update(); // ï¿½ï¿½ï¿½Â»ï¿½Ðµï¿½Ûµï¿½×´Ì¬
 		if(fabs(curServoAngles[jntIdx] - nextServoAngles[jntIdx]) <= FSUS_ANGLE_DEAD_BLOCK){
 			break;
 		}else{
-			// ÅÐ¶ÏÊÇ·ñ·¢Éú¿¨ËÀµÄÇé¿ö
-			// Îó²î²îÖµ±£³Ö²»±ä
+			// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			// ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½
 			if(fabs(dAngle) < 5.0 && fabs(dAngle - fabs(curServoAngles[jntIdx] - nextServoAngles[jntIdx])) <= 1.0){
-				// ÅÐ¶ÏÊÇ·ñ³¬Ê±
+				// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Ê±
 				if(SysTick_Millis() - tStart >= FSUS_WAIT_TIMEOUT_MS){
 					break;
 				}
 			}else{
-				// ¸üÐÂ½Ç¶ÈÎó²î
+				// ï¿½ï¿½ï¿½Â½Ç¶ï¿½ï¿½ï¿½ï¿½
 				dAngle = fabs(dAngle - fabs(curServoAngles[jntIdx] - nextServoAngles[jntIdx]));
-				// ¿ªÊ¼µ¹¼ÆÊ±
+				// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ê±
 				// SysTick_CountdownBegin(FSUS_WAIT_TIMEOUT_MS);
 				tStart = SysTick_Millis();
 			}
@@ -435,55 +435,55 @@ void FSARM_Wait(uint8_t jntIdx){
 	}
 }
 
-// µÈ´ýËùÓÐµÄ¹Ø½ÚÐý×ªµ½Ä¿±ê½Ç¶È
+// ï¿½È´ï¿½ï¿½ï¿½ï¿½ÐµÄ¹Ø½ï¿½ï¿½ï¿½×ªï¿½ï¿½Ä¿ï¿½ï¿½Ç¶ï¿½
 void FSARM_WaitAll(void){
 	for(uint8_t srvIdx=0; srvIdx < FSARM_SERVO_NUM; srvIdx++){
 		FSARM_Wait(srvIdx);
 	}
 }
 
-// ¼ÆËãÄ©¶Ë¹¤¾ßµÄ×ø±ê 
+// ï¿½ï¿½ï¿½ï¿½Ä©ï¿½Ë¹ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½ 
 void FSARM_GetToolPosi(FSARM_POINT3D_T *toolPosi){
-	FSARM_JOINTS_STATE_T curJointAngles; // µ±Ç°¹Ø½ÚµÄ½Ç¶È
-	FSARM_QueryJointAngle(&curJointAngles); // ²éÑ¯¹Ø½Ú½Ç¶È
-	FSARM_ForwardKinmatics(curJointAngles, toolPosi);// ÕýÏòÔË¶¯Ñ§
+	FSARM_JOINTS_STATE_T curJointAngles; // ï¿½ï¿½Ç°ï¿½Ø½ÚµÄ½Ç¶ï¿½
+	FSARM_QueryJointAngle(&curJointAngles); // ï¿½ï¿½Ñ¯ï¿½Ø½Ú½Ç¶ï¿½
+	FSARM_ForwardKinmatics(curJointAngles, toolPosi);// ï¿½ï¿½ï¿½ï¿½ï¿½Ë¶ï¿½Ñ§
 }
 
-// Æø±Ã¿ªÆô
+// ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½
 void FSARM_PumpOn(void){
-	FSUS_SetServoAngle(armUsart, PUMP_SERVO_ID, -90, 0, 0, false); // ´ò¿ªµç»ú
+	FSUS_SetServoAngle(armUsart, PUMP_SERVO_ID, -90, 0, 0, false); // ï¿½ò¿ªµï¿½ï¿½
 }
 
-// Æø±Ã¹Ø±Õ
+// ï¿½ï¿½ï¿½Ã¹Ø±ï¿½
 void FSARM_PumpOff(void){
-	FSUS_SetServoAngle(armUsart, PUMP_SERVO_ID, 0, 0, 0, false);  // ¹Ø±Õµç»ú
+	FSUS_SetServoAngle(armUsart, PUMP_SERVO_ID, 0, 0, 0, false);  // ï¿½Ø±Õµï¿½ï¿½
 	SysTick_DelayMs(200);
-	FSUS_SetServoAngle(armUsart, PUMP_SERVO_ID, 90, 0, 0, false); // ´ò¿ªµç´Å·§
+	FSUS_SetServoAngle(armUsart, PUMP_SERVO_ID, 90, 0, 0, false); // ï¿½ò¿ªµï¿½Å·ï¿½
 	SysTick_DelayMs(200);
-	FSUS_SetServoAngle(armUsart, PUMP_SERVO_ID, 0, 0, 0, false);  // ¹Ø±Õµç´Å·§
+	FSUS_SetServoAngle(armUsart, PUMP_SERVO_ID, 0, 0, 0, false);  // ï¿½Ø±Õµï¿½Å·ï¿½
 }
 
-// Îï¿é×¥È¡
+// ï¿½ï¿½ï¿½×¥È¡
 void FSARM_Grab(float x1, float y1, float z1, float x2, float y2, float z2){
-	FSARM_MoveLine(x1, y1, z1+4); // ÔË¶¯µ½Ä¿±êµãÉÏ·½
+	FSARM_MoveLine(x1, y1, z1+4); // ï¿½Ë¶ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Ï·ï¿½
     SysTick_DelayMs(200);
-    FSARM_MoveLine(x1, y1, z1); // ÔË¶¯µ½Ä¿±êµã
+    FSARM_MoveLine(x1, y1, z1); // ï¿½Ë¶ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½
     SysTick_DelayMs(200);
-    FSARM_PumpOn(); // ¿ªÆôÆø±Ã
+    FSARM_PumpOn(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     SysTick_DelayMs(200);
     FSARM_SetSpeed(50);
-    FSARM_MoveLine(x1, y1, z1-1); // Æø±ÃÏÂÑ¹
+    FSARM_MoveLine(x1, y1, z1-1); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¹
     SysTick_DelayMs(200);
-    FSARM_MoveLine(x1, y1, z1+4); // Ì§Æð
+    FSARM_MoveLine(x1, y1, z1+4); // Ì§ï¿½ï¿½
     SysTick_DelayMs(200);
     FSARM_SetSpeed(100);
-    FSARM_MoveLine(x2, y2, z2+4); // ÔË¶¯µ½Ä¿±êµãÉÏ·½
+    FSARM_MoveLine(x2, y2, z2+4); // ï¿½Ë¶ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Ï·ï¿½
     SysTick_DelayMs(200);
     FSARM_SetSpeed(50);
-    FSARM_MoveLine(x2, y2, z2); // ÔË¶¯µ½Ä¿±êµã
+    FSARM_MoveLine(x2, y2, z2); // ï¿½Ë¶ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½
     SysTick_DelayMs(200);
-    FSARM_PumpOff(); // ¹Ø±ÕÆø±Ã
+    FSARM_PumpOff(); // ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½
     SysTick_DelayMs(200);
-    FSARM_MoveLine(x2, y2, z2+4); // ÔË¶¯µ½Ä¿±êµãÉÏ·½
+    FSARM_MoveLine(x2, y2, z2+4); // ï¿½Ë¶ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Ï·ï¿½
     FSARM_SetSpeed(100);
 }
